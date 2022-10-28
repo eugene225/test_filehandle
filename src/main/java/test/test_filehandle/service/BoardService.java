@@ -2,10 +2,13 @@ package test.test_filehandle.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import test.test_filehandle.entity.Board;
 import test.test_filehandle.repository.BoardRepository;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class BoardService {
@@ -14,7 +17,18 @@ public class BoardService {
     private BoardRepository boardRepository;
 
     //글 작성 처리
-    public void write(Board board) {
+    public void write(Board board, MultipartFile file) throws Exception {
+
+        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+
+        UUID uuid = UUID.randomUUID();
+
+        String fileName = uuid + "_" + file.getOriginalFilename();  //중복제거
+
+        File saveFile = new File(projectPath, fileName);
+
+        file.transferTo(saveFile);
+
         boardRepository.save(board);
     }
 
@@ -27,4 +41,6 @@ public class BoardService {
     public Board boardView(Integer id){
         return boardRepository.findById(id).get();
     }
+
+
 }
