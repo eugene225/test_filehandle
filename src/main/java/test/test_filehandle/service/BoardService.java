@@ -29,6 +29,10 @@ public class BoardService {
 
         file.transferTo(saveFile);
 
+        //DB에 파일 데이터 넣어주기 filename, filepath
+        board.setFilename(fileName);
+        board.setFilepath("/files/"+fileName);
+
         boardRepository.save(board);
     }
 

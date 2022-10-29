@@ -48,7 +48,7 @@ public class BoardController {
         return "boardview";
     }
 
-    @PostMapping("/board/updata/{id}")
+    @PostMapping("/board/update/{id}")
     public String boardUpdate(@PathVariable("id") Integer id, Board board, MultipartFile file) throws Exception{
         Board boardTemp = boardService.boardView(id);
         boardTemp.setTitle(board.getTitle());
